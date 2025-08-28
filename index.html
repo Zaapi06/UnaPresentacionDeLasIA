@@ -404,18 +404,19 @@ html, body {
 <p>Este proyecto sirve como ejemplo de las posibilidades ilimitadas que surgen cuando diferentes enfoques de IA se unen para superar límites y crear experiencias excepcionales.</p>
       </section>
         
-    <section class="card">
+        <section class="card">
   <div class="card-title">
     <i class="fas fa-robot"></i>
     <h2>¿Cuáles son nuestros puntos fuertes?</h2>
   </div>
-    </div>
-      </div>
-        </div>
+  <!-- ELIMINAR las 4 líneas que siguen aquí -->
   
+  <!-- MOVER este párrafo aquí: -->
   <p>Selecciona cada IA para descubrir sus características principales y especialidades:</p>
   
   <div class="menu-interactivo">
+    <!-- ... el resto del menú interactivo ... -->
+
     <div class="selector-ia">
       <button class="boton-ia active" onclick="mostrarInfo('chatgpt')">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/ChatGPT-Logo.svg/250px-ChatGPT-Logo.svg.png" alt="ChatGPT" style="width: 30px; margin-right: 10px;">
@@ -518,7 +519,7 @@ function mostrarInfo(ia) {
   });
   
   // Mostrar la información seleccionada
-  const infoElement = document.getElementById(`info-${ia}`);
+  const infoElement = document.getElementById(`info-${ia}`);{}
   if (infoElement) {
     infoElement.classList.add('active');
   }
