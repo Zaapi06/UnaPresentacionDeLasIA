@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colaboración IA: ChatGPT & DeepSeek</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1e40af;
+      --secondary: #8b5cf6;
+      --light: #f3f4f6;
+      --dark: #1f2937;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --gray: #9ca3af;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+      color: var(--dark);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+    
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 20px;
+    }
+    
+    .logo {
+      width: 120px;
+      height: 120px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .logo i {
+      font-size: 40px;
+      color: var(--primary);
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    
+    .cards-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+      padding: 30px;
+      width: 100%;
+      max-width: 550px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+    }
+    
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+    
+    .card-title i {
+      font-size: 24px;
+    }
+    
+    h2 {
+      font-size: 1.8rem;
+    }
+    
+    p {
+      margin-bottom: 15px;
+      font-size: 1.05rem;
+    }
+    
+    .imc-form {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+    
+    button {
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 16px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(37, 99, 235, 0.4);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    #resultado {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      display: none;
+    }
+    
+    .result-underweight {
+      background-color: #fef3c7;
+      color: #d97706;
+    }
+    
+    .result-normal {
+      background-color: #d1fae5;
+      color: #059669;
+    }
+    
+    .result-overweight {
+      background-color: #fee2e2;
+      color: #dc2626;
+    }
+    
+    .result-obese {
+      background-color: #fecaca;
+      color: #b91c1c;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 30px;
+      margin-top: 40px;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .cards-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .card {
+        max-width: 100%;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .logo {
+        width: 60px;
+        height: 60px;
+      }
+      
+      .logo i {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-container">
+  <div class="logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/OpenAI_Logo.svg/1280px-OpenAI_Logo.svg.png" alt="OpenAI Logo" style="width: 100px;">
+  </div>
+  <div class="logo">
+    <img src="https://logoeps.com/wp-content/uploads/2025/02/DeepSeek_logo_icon-768x768.png" alt="DeepSeek Logo" style="width: 100px;">
+  </div>
+</div>
+      <h1>Colaboración entre Inteligencias Artificiales</h1>
+      <p class="subtitle">ChatGPT y DeepSeek-V3 uniendo fuerzas para crear soluciones innovadoras</p>
+    </header>
+    
+    <div class="cards-container">
+      <section class="card">
+        <div class="card-title">
+          <i class="fas fa-handshake"></i>
+          <h2>¿Quiénes somos?</h2>
+        </div>
+        <p>¡Bienvenido a este proyecto de colaboración entre inteligencias artificiales! En esta página web, ChatGPT contribuyó con la creación de la calculadora de IMC y el texto inicial, mientras que DeepSeek-V3 se encargó del diseño visual, la estructura moderna y la experiencia de usuario.</p>
+<p>Juntos demostramos cómo diferentes modelos de IA pueden complementarse para crear soluciones web funcionales y atractivas, potenciando tanto la creatividad como la funcionalidad en el desarrollo web.</p>
+      </section>
+      
+      <section class="card">
+       <div class="card-title">
+  <i class="fas fa-calculator"></i>
+  <h2>Calculadora de IMC</h2>
+</div>
+<p>Aquí tenemos una muestra de nuestro potencial añadiendo una calculadora de IMC, una herramienta importante para el control de tu salud y bienestar.</p>
+        <form id="formIMC" class="imc-form">
+          <div class="form-group">
+            <label for="peso">Peso (kg):</label>
+            <input type="number" id="peso" step="0.1" min="1" placeholder="Ej: 68.5" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="altura">Altura (m):</label>
+            <input type="number" id="altura" step="0.01" min="0.5" max="2.5" placeholder="Ej: 1.75" required>
+          </div>
+          
+          <button type="button" onclick="calcularIMC()">
+            <i class="fas fa-calculator"></i> Calcular IMC
+          </button>
+        </form>
+        <div id="resultado"></div>
+      </section>
+    </div>
+  </div>
+  
+  <footer>
+    <p>Desarrollado con la colaboración de ChatGPT y DeepSeek-V3 • 2023</p>
+  </footer>
+
+  <script>
+    function calcularIMC() {
+      const peso = parseFloat(document.getElementById("peso").value);
+      const altura = parseFloat(document.getElementById("altura").value);
+      const resultadoElement = document.getElementById("resultado");
+
+      if (peso > 0 && altura > 0) {
+        const imc = (peso / (altura * altura)).toFixed(2);
+        let clasificacion = "";
+        let claseResultado = "";
+
+        if (imc < 18.5) {
+          clasificacion = "Bajo peso";
+          claseResultado = "result-underweight";
+        } else if (imc < 24.9) {
+          clasificacion = "Peso normal";
+          claseResultado = "result-normal";
+        } else if (imc < 29.9) {
+          clasificacion = "Sobrepeso";
+          claseResultado = "result-overweight";
+        } else {
+          clasificacion = "Obesidad";
+          claseResultado = "result-obese";
+        }
+
+        resultadoElement.textContent = `Tu IMC es ${imc} (${clasificacion}).`;
+        resultadoElement.className = claseResultado;
+        resultadoElement.style.display = 'block';
+      } else {
+        resultadoElement.textContent = "Por favor ingresa valores válidos.";
+        resultadoElement.className = "result-underweight";
+        resultadoElement.style.display = 'block';
+      }
+    }
+
+    // Permitir calcular con la tecla Enter
+    document.addEventListener('DOMContentLoaded', function() {
+      const inputs = document.querySelectorAll('input');
+      inputs.forEach(input => {
+        input.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            calcularIMC();
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
