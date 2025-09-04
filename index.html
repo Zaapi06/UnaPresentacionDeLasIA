@@ -314,22 +314,29 @@ el.style.backgroundPosition = "center";
 
     // ====== Entrada: soltar animal con clic/tap ======
     function onDrop(ev) {
-      if (gameOver) return;
-      const rect = gameContainer.getBoundingClientRect();
-      const clientX = (ev.touches?.[0]?.clientX) ?? ev.clientX;
-      let x = clientX - rect.left;
-
-      const r = animalTypes[nextAnimalType].radius;
-      x = clamp(x, r + 1, gameContainer.clientWidth - r - 1);
-
-      // Aparece arriba del todo, ligeramente fuera del contenedor para caer natural
-      createAnimal(nextAnimalType, x, -r - 2, { vx: 0, vy: 0 });
-
-      // El siguiente puede subir de nivel máximo hasta +1 para no saltar demasiado
-      nextAnimalType = getRandomAnimalType(0, Math.min(animalTypes.length - 1, nextAnimalType + 1));
-      updateNextAnimalDisplay();
+    if (gameOver) return;
+    
+    // Protección adicional contra doble invocación
+    const now = Date.now();
+    if (typeof this.lastDrop === 'number' && now - this.lastDrop < 500) {
+        return;
     }
+    this.lastDrop = now;
+    
+    const rect = gameContainer.getBoundingClientRect();
+    const clientX = (ev.touches?.[0]?.clientX) ?? ev.clientX;
+    let x = clientX - rect.left;
 
+    const r = animalTypes[nextAnimalType].radius;
+    x = clamp(x, r + 1, gameContainer.clientWidth - r - 1);
+
+    // Aparece arriba del todo, ligeramente fuera del contenedor para caer natural
+    createAnimal(nextAnimalType, x, -r - 2, { vx: 0, vy: 0 });
+
+    // El siguiente puede subir de nivel máximo hasta +1 para no saltar demasiado
+    nextAnimalType = getRandomAnimalType(0, Math.min(animalTypes.length - 1, nextAnimalType + 1));
+    updateNextAnimalDisplay();
+}
     // ====== Bucle principal con requestAnimationFrame ======
     function loop(ts) {
       if (!lastTs) lastTs = ts;
@@ -377,6 +384,17 @@ el.style.backgroundPosition = "center";
             b.resting = true;
           }
         }
+        function dropAnimal(e) {
+    if (gameOver) return;
+    
+    // Prevenir múltiples invocaciones rápidas
+    if (typeof this.lastDrop === 'number') {
+        const now = Date.now();
+        if (now - this.lastDrop < 500) { // 500ms de espera
+            return;
+        }
+    }
+    this.lastDrop = Date.now();
         // Comprobar si algún animal salió por arriba
 for (const b of animals.slice()) {
   if (b.y + b.r < -OUT_MARGIN) {
@@ -544,8 +562,28 @@ for (const b of animals.slice()) {
       updateNextAnimalDisplay();
 
       // Escuchar una sola vez (evitamos listeners duplicados al reiniciar)
-      gameContainer.addEventListener('click', onDrop, { passive: true });
-      gameContainer.addEventListener('touchstart', onDrop, { passive: true });
+      // Escuchar una sola vez (SOLUCIÓN PARA DOBLE INVOCACIÓN EN MÓVILES)
+let lastDropTime = 0;
+const DROP_COOLDOWN = 500; // 500ms entre animales
+
+function handleDrop(ev) {
+    const now = Date.now();
+    if (now - lastDropTime < DROP_COOLDOWN) return;
+    lastDropTime = now;
+    
+    onDrop(ev);
+}
+
+// Para dispositivos táctiles
+gameContainer.addEventListener('touchstart', function(ev) {
+    ev.preventDefault();
+    handleDrop(ev);
+}, { passive: false });
+
+// Para ratón
+gameContainer.addEventListener('click', function(ev) {
+    handleDrop(ev);
+});
       restartBtn.addEventListener('click', resetGame);
 
       animId = requestAnimationFrame(loop);
@@ -557,6 +595,7 @@ for (const b of animals.slice()) {
 
 
 </html>
+
 
 
 
