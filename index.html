@@ -384,17 +384,7 @@ el.style.backgroundPosition = "center";
             b.resting = true;
           }
         }
-        function dropAnimal(e) {
-    if (gameOver) return;
-    
-    // Prevenir múltiples invocaciones rápidas
-    if (typeof this.lastDrop === 'number') {
-        const now = Date.now();
-        if (now - this.lastDrop < 500) { // 500ms de espera
-            return;
-        }
-    }
-    this.lastDrop = Date.now();
+        
         // Comprobar si algún animal salió por arriba
 for (const b of animals.slice()) {
   if (b.y + b.r < -OUT_MARGIN) {
@@ -595,6 +585,7 @@ gameContainer.addEventListener('click', function(ev) {
 
 
 </html>
+
 
 
 
