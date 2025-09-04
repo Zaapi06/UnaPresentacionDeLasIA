@@ -1,560 +1,544 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Colaboración IA: ChatGPT & DeepSeek</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animalitos Kawaii - Colisiones Estables</title>
   <style>
-    :root {
-      --primary: #2563eb;
-      --primary-dark: #1e40af;
-      --secondary: #8b5cf6;
-      --light: #f3f4f6;
-      --dark: #1f2937;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-      --gray: #9ca3af;
-    }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-      color: var(--dark);
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-    
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-    
-    header {
-      background: linear-gradient(to right, var(--primary), var(--secondary));
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-      border-radius: 0 0 20px 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      margin-bottom: 30px;
-    }
-    
-    .logo-container {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      margin-bottom: 20px;
-    }
-    
-    .logo {
-      width: 120px;
-      height: 120px;
-      background: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-    
-    .logo i {
-      font-size: 40px;
-      color: var(--primary);
-    }
-    
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
-    
-    .subtitle {
-      font-size: 1.2rem;
-      opacity: 0.9;
-    }
-    
-    .cards-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      margin-bottom: 40px;
-    }
-    
-    .card {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-      padding: 30px;
-      width: 100%;
-      max-width: 550px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
-    }
-    
-    .card-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      color: var(--primary);
-    }
-    
-    .card-title i {
-      font-size: 24px;
-    }
-    
-    h2 {
-      font-size: 1.8rem;
-    }
-    
-    p {
-      margin-bottom: 15px;
-      font-size: 1.05rem;
-    }
-    
-    .imc-form {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: url("https://sdmntprwestus3.oaiusercontent.com/files/00000000-93f8-61fd-9c49-3ceadcb1f005/raw?se=2025-09-04T20%3A37%3A52Z&sp=r&sv=2024-08-04&sr=b&scid=9a3d2772-be35-56cc-b157-326321064b66&skoid=a3412ad4-1a13-47ce-91a5-c07730964f35&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-04T11%3A06%3A44Z&ske=2025-09-05T11%3A06%3A44Z&sks=b&skv=2024-08-04&sig=WvajU8ctIqk8OufsY0f3j4yTCaWkauOavtTyP3JcjOw%3D") no-repeat center center fixed;
+      background-size: cover;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      margin: 0;
+      min-height: 100vh;
     }
-    
-    .form-group {
-      margin-bottom: 20px;
+
+    h1 {
+      color: #ff66a3;
+      text-shadow: 2px 2px 0px #fff;
+      margin-bottom: 10px;
     }
-    
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: var(--dark);
-    }
-    
-    input {
-      width: 100%;
-      padding: 14px;
-      border: 2px solid #e5e7eb;
+
+    #game-container {
+      position: relative;
+      width: 400px;
+      height: 600px;
+      background: rgba(255, 255, 255, 0.2);
+      /* Fondo translúcido */
+      border-radius: 20px;
+      /* Bordes redondeados */
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      /* Sombras suaves */
+      backdrop-filter: blur(10px);
+      /* Difuminado */
+      -webkit-backdrop-filter: blur(10px);
+      /* Compatibilidad Safari */
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      /* Bordecito brillante */
+      border: 5px solid #66b3ff;
       border-radius: 10px;
-      font-size: 1rem;
-      transition: border-color 0.3s;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      user-select: none;
+      touch-action: manipulation;
     }
-    
-    input:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+
+    #next-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 15px 0;
+      background-color: #ffccdd;
+      padding: 10px;
+      border-radius: 15px;
+      border: 3px solid #ff66a3;
     }
-    
-    button {
-      background: linear-gradient(to right, var(--primary), var(--secondary));
+
+    #next-label {
+      font-weight: bold;
+      color: #ff66a3;
+      margin-bottom: 5px;
+    }
+
+    #next-animal {
+      width: 60px;
+      height: 60px;
+      background-color: #ffddcc;
+      border: 3px solid #ff66a3;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      color: #ff66a3;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: width .15s ease, height .15s ease, transform .15s ease;
+    }
+
+    .animal {
+      position: absolute;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.2);
+      background-size: cover;
+      background-position: center;
+      will-change: transform, top, left;
+      transition: transform 0.12s;
+      pointer-events: none;
+    }
+
+    .animal.moving {
+      animation: pulse 0.5s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from {
+        transform: scale(1);
+      }
+
+      to {
+        transform: scale(1.05);
+      }
+    }
+
+    #score-container {
+      background-color: #ccffcc;
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: 3px solid #66cc66;
+      margin-bottom: 15px;
+    }
+
+    #score {
+      font-size: 24px;
+      color: #339933;
+      font-weight: bold;
+    }
+
+    #instructions {
+      margin-top: 20px;
+      text-align: center;
+      color: #666;
+      max-width: 400px;
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #restart-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #ff66a3;
       color: white;
       border: none;
-      border-radius: 10px;
-      padding: 16px;
-      font-size: 1.1rem;
-      font-weight: 600;
+      border-radius: 20px;
+      font-family: 'Comic Sans MS', cursive;
+      font-size: 16px;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s, background-color .2s;
     }
-    
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(37, 99, 235, 0.4);
+
+    #restart-btn:hover {
+      transform: scale(1.05);
+      background-color: #ff3385;
     }
-    
-    button:active {
-      transform: translateY(0);
-    }
-    
-    #resultado {
-      margin-top: 20px;
-      padding: 16px;
-      border-radius: 10px;
-      text-align: center;
-      font-weight: 600;
-      font-size: 1.1rem;
+
+    .game-over {
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.7);
       display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 32px;
+      z-index: 100;
+      gap: 8px;
     }
-    
-    .result-underweight {
-      background-color: #fef3c7;
-      color: #d97706;
-    }
-    
-    .result-normal {
-      background-color: #d1fae5;
-      color: #059669;
-    }
-    
-    .result-overweight {
-      background-color: #fee2e2;
-      color: #dc2626;
-    }
-    
-    .result-obese {
-      background-color: #fecaca;
-      color: #b91c1c;
-    }
-    
-    footer {
-      text-align: center;
-      padding: 30px;
-      margin-top: 40px;
-      color: var(--gray);
-      font-size: 0.9rem;
-    }
-    
-    @media (max-width: 768px) {
-      .cards-container {
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .card {
-        max-width: 100%;
-      }
-      
-      h1 {
-        font-size: 2rem;
-      }
-      
-      .logo {
-        width: 60px;
-        height: 60px;
-      }
-      
-      .logo i {
-        font-size: 30px;
-      }
-    }
-    .menu-interactivo {
-  margin-top: 20px;
-}
-
-.selector-ia {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 25px;
-  justify-content: center;
-}
-
-.boton-ia {
-  display: flex;
-  align-items: center;
-  padding: 12px 20px;
-  background: #e5e7eb;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 600;
-}
-
-.boton-ia:hover {
-  background: #d1d5db;
-  transform: translateY(-2px);
-}
-
-.boton-ia.active {
-  background: linear-gradient(to right, var(--primary), var(--secondary));
-  color: white;
-  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
-}
-
-.info-ia {
-  display: none;
-  padding: 20px;
-  background: #f8fafc;
-  border-radius: 10px;
-  border-left: 4px solid var(--primary);
-}
-
-.info-ia.active {
-  display: block;
-  animation: fadeIn 0.5s ease;
-}
-
-.info-ia h3 {
-  color: var(--primary);
-  margin-bottom: 15px;
-  font-size: 1.4rem;
-}
-
-.info-ia p {
-  margin-bottom: 12px;
-  padding-left: 10px;
-  border-left: 3px solid var(--secondary);
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-
-}
-.card-wide {
-  max-width: 800px !important;
-  margin: 20px auto;
-  box-sizing: border-box !important;
-}
-
-/* Para móviles */
-@media (max-width: 768px) {
-  .card-wide {
-    max-width: 100% !important;
-    margin: 15px 0 !important;
-    padding: 20px 15px !important;
-    border-radius: 12px !important;
-  }
-  
-  .card-wide .card-title {
-    text-align: center;
-  }
-  
-  .card-wide h2 {
-    font-size: 1.5rem !important;
-  }
-}
-
-/* Para tablets */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .card-wide {
-    max-width: 90% !important;
-    padding: 25px !important;
-  }
-}
-
-/* Para pantallas grandes */
-@media (min-width: 1200px) {
-  .card-wide {
-    max-width: 900px !important;
-  }
-
-}
-/* Fuerza a que todo el contenido se ajuste */
-html, body {
-  overflow-x: hidden;
-  width: 100%;
-}
-
-* {
-  max-width: 100%;
-}
-
-/* Contenedor principal seguro */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  width: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-@media (max-width: 768px) {
-  .container {
-    padding: 10px 5px;
-    width: 100vw;
-    overflow: hidden;
-  }
-  
-  body {
-    padding: 0;
-    margin: 0;
-  }
-}
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <header>
-      <div class="logo-container">
-  <div class="logo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/OpenAI_Logo.svg/1280px-OpenAI_Logo.svg.png" alt="OpenAI Logo" style="width: 100px;">
-  </div>
-  <div class="logo">
-    <img src="https://logoeps.com/wp-content/uploads/2025/02/DeepSeek_logo_icon-768x768.png" alt="DeepSeek Logo" style="width: 100px;">
-  </div>
-</div>
-      <h1>Colaboración entre Inteligencias Artificiales</h1>
-      <p class="subtitle">ChatGPT y DeepSeek-V3 uniendo fuerzas para crear soluciones innovadoras</p>
-    </header>
-    
-    <div class="cards-container">
-      <section class="card">
-        <div class="card-title">
-          <i class="fas fa-handshake"></i>
-          <h2>¿Quiénes somos?</h2>
-        </div>
-        <p><p>¡Bienvenid@ al futuro de la colaboración entre inteligencias artificiales! Esta página demuestra cómo modelos de IA diferentes pero complementarios pueden trabajar juntos para crear soluciones innovadoras.</p>
+  <h1>ChibiZoo 🐾✨</h1>
 
-<p>Explora nuestras capacidades individuales a través del menú interactivo y descubre cómo la combinación de creatividad y precisión técnica puede potenciar tus proyectos digitales.</p>
-
-<p>Este proyecto sirve como ejemplo de las posibilidades ilimitadas que surgen cuando diferentes enfoques de IA se unen para superar límites y crear experiencias excepcionales.</p>
-      </section>
-        
-        <section class="card">
-  <div class="card-title">
-    <i class="fas fa-robot"></i>
-    <h2>¿Cuáles son nuestros puntos fuertes?</h2>
+  <div id="score-container">
+    <div id="score">Puntuación: 0</div>
   </div>
-  <!-- ELIMINAR las 4 líneas que siguen aquí -->
-  
-  <!-- MOVER este párrafo aquí: -->
-  <p>Selecciona cada IA para descubrir sus características principales y especialidades:</p>
-  
-  <div class="menu-interactivo">
-    <!-- ... el resto del menú interactivo ... -->
 
-    <div class="selector-ia">
-      <button class="boton-ia active" onclick="mostrarInfo('chatgpt')">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/ChatGPT-Logo.svg/250px-ChatGPT-Logo.svg.png" alt="ChatGPT" style="width: 30px; margin-right: 10px;">
-        ChatGPT
-      </button>
-      <button class="boton-ia" onclick="mostrarInfo('deepseek')">
-        <img src="https://logoeps.com/wp-content/uploads/2025/02/DeepSeek_logo_icon-768x768.png" alt="DeepSeek" style="width: 30px; margin-right: 10px;">
-        DeepSeek-V3
-      </button>
+  <div id="next-container">
+    <div id="next-label">Próximo Animalito</div>
+    <div id="next-animal">?</div>
+  </div>
+
+  <div id="game-container">
+    <div class="game-over" id="game-over">
+      <div>¡Game Over!</div>
+      <div id="final-score">Puntuación: 0</div>
     </div>
+  </div>
+
+  <button id="restart-btn">Reiniciar Juego</button>
+
+  <div id="instructions">
+    <p>Haz clic para soltar el animalito. Combina dos iguales para crear uno más grande.</p>
+    <p>Animalitos (de menor a mayor): Ratón, Nutria, Gato, Perro, Cerdo, Vaca, Oso, Elefante</p>
+  </div>
+
+  <script>
+
     
-    <div id="info-chatgpt" class="info-ia active">
-  <h3>¡Hola, soy ChatGPT! 👋</h3>
-  <p><strong>Mi especialidad:</strong> Creo conversaciones naturales y fluidas como si fuera humano</p>
-  <p><strong>Mis ventajas:</strong> Tengo conocimiento amplio hasta 2023 y soy excelente generando ideas creativas</p>
-  <p><strong>Soy ideal para:</strong> Redacción de textos, brainstorming, código básico y respuestas generales</p>
     
-</div>
-    
-    <div id="info-deepseek" class="info-ia">
-  <h3>¡Hola, soy DeepSeek-V3! 🚀</h3>
-  <p><strong>Mi superpoder:</strong> Tengo una memoria enorme (128K de contexto) para análisis profundos</p>
-  <p><strong>Me destaco en:</strong> Análisis técnico detallado y comprensión de documentos complejos</p>
-  <p><strong>Soy perfecto para:</strong> Desarrollo web avanzado, proyectos técnicos y análisis especializados</p>
 
-</div>
-  </div>
-</section>
-</section>
+    // ====== Configuración de animales ======
+    const animalTypes = [
+      { name: "", radius: 20, img: "https://copilot.microsoft.com/th/id/BCO.75be99b2-c85b-4aea-9d54-c5bd4caa6542.png", points: 10 },
+      { name: "", radius: 30, img: "https://copilot.microsoft.com/th/id/BCO.4ed88179-a800-435d-9779-a260a7a14798.png", points: 20 },
+      { name: "", radius: 40, img: "https://copilot.microsoft.com/th/id/BCO.b908c3bc-658b-4b71-ac2c-ad46189739f3.png", points: 50 },
+      { name: "", radius: 50, img: "https://copilot.microsoft.com/th/id/BCO.9a10dc33-805f-49c5-9061-22701637fc2c.png", points: 100 },
+      { name: "", radius: 60, img: "https://copilot.microsoft.com/th/id/BCO.3a226cca-94a0-4b71-b722-47dd88dc66c2.png", points: 200 },
+      { name: "", radius: 70, img: "https://copilot.microsoft.com/th/id/BCO.6610442a-75ac-4845-b8f0-dae93a652821.png", points: 500 },
+      { name: "", radius: 80, img: "https://copilot.microsoft.com/th/id/BCO.d178a2eb-bc7a-4767-8c7f-994f4ea39b7d.png", points: 1000 },
+      { name: "", radius: 90, img: "https://copilot.microsoft.com/th/id/BCO.117fc74f-0631-4c68-84de-9d7961cb1d64.png", points: 2000 },
+    ];
 
-<!-- Nueva sección extendida sobre IA -->
-<section class="card card-wide">  <!-- AÑADE card-wide AQUÍ -->
-  <div class="card-title">
-    <i class="fas fa-microchip"></i>
-    <h2>El Impacto Transformador de la Inteligencia Artificial</h2>
-  </div>
-  
-  <p>La <strong>Inteligencia Artificial</strong> representa uno de los avances tecnológicos más significativos de nuestra era, transformando radicalmente cómo vivimos, trabajamos y nos relacionamos con el mundo digital.</p>
-  
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 25px 0;">
-  <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 20px; border-radius: 12px; text-align: center; border-left: 4px solid var(--primary);">
-    <i class="fas fa-brain" style="font-size: 2.2rem; color: var(--primary); margin-bottom: 15px;"></i>
-    <h4 style="color: var(--primary); margin-bottom: 12px;">Aprendizaje Continuo y Adaptativo</h4>
-    <p style="line-height: 1.6;">Las IA modernas utilizan machine learning para mejorar constantemente, aprendiendo de cada interacción y ajustando sus respuestas para ser más precisas y relevantes con el tiempo.</p>
-  </div>
-  
-  <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); padding: 20px; border-radius: 12px; text-align: center; border-left: 4px solid var(--success);">
-    <i class="fas fa-bolt" style="font-size: 2.2rem; color: var(--success); margin-bottom: 15px;"></i>
-    <h4 style="color: var(--success); margin-bottom: 12px;">Velocidad y Eficiencia sin Precedentes</h4>
-    <p style="line-height: 1.6;">Capaces de procesar y analizar grandes volúmenes de datos en segundos, las IA realizan tareas complejas que requerirían días o semanas de trabajo humano manual.</p>
-  </div>
-  
-  <div style="background: linear-gradient(135deg, #fdf4ff 0%, #fae8ff 100%); padding: 20px; border-radius: 12px; text-align: center; border-left: 4px solid var(--secondary);">
-    <i class="fas fa-globe" style="font-size: 2.2rem; color: var(--secondary); margin-bottom: 15px;"></i>
-    <h4 style="color: var(--secondary); margin-bottom: 12px;">Escalabilidad Global e Inclusiva</h4>
-    <p style="line-height: 1.6;">Las soluciones de IA pueden implementarse a escala global, brindando asistencia personalizada a millones de usuarios simultáneamente, rompiendo barreras geográficas y idiomáticas.</p>
-  </div>
-  
-  <!-- NUEVA CUARTA CARACTERÍSTICA -->
-  <div style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); padding: 20px; border-radius: 12px; text-align: center; border-left: 4px solid var(--warning);">
-    <i class="fas fa-robot" style="font-size: 2.2rem; color: var(--warning); margin-bottom: 15px;"></i>
-    <h4 style="color: var(--warning); margin-bottom: 12px;">Personalización y Adaptabilidad</h4>
-    <p style="line-height: 1.6;">Las IA pueden adaptarse a las necesidades específicas de cada usuario, ofreciendo experiencias personalizadas y respuestas contextualmente relevantes para cada situación individual.</p>
-  </div>
-</div>
+    // ====== Estado del juego ======
+    const gameContainer = document.getElementById('game-container');
+    const nextAnimalDisplay = document.getElementById('next-animal');
+    const scoreDisplay = document.getElementById('score');
+    const gameOverDisplay = document.getElementById('game-over');
+    const finalScoreDisplay = document.getElementById('final-score');
+    const restartBtn = document.getElementById('restart-btn');
 
-  <div style="background: #f8fafc; padding: 25px; border-radius: 12px; margin: 20px 0; border-left: 4px solid var(--primary);">
-    <h4 style="color: var(--primary); margin-bottom: 15px;">💡 Aplicaciones Revolucionarias en la Vida Cotidiana</h4>
-    <ul style="columns: 2; list-style-type: none; padding: 0;">
-      <li style="margin-bottom: 10px; padding-left: 25px; position: relative;"><i class="fas fa-check-circle" style="color: var(--success); position: absolute; left: 0;"></i> Diagnóstico médico asistido</li>
-      <li style="margin-bottom: 10px; padding-left: 25px; position: relative;"><i class="fas fa-check-circle" style="color: var(--success); position: absolute; left: 0;"></i> Educación personalizada</li>
-      <li style="margin-bottom: 10px; padding-left: 25px; position: relative;"><i class="fas fa-check-circle" style="color: var(--success); position: absolute; left: 0;"></i> Desarrollo de software</li>
-      <li style="margin-bottom: 10px; padding-left: 25px; position: relative;"><i class="fas fa-check-circle" style="color: var(--success); position: absolute; left: 0;"></i> Investigación científica</li>
-      <li style="margin-bottom: 10px; padding-left: 25px; position: relative;"><i class="fas fa-check-circle" style="color: var(--success); position: absolute; left: 0;"></i> Creación de contenido</li>
-      <li style="margin-bottom: 10px; padding-left: 25px; position: relative;"><i class="fas fa-check-circle" style="color: var(--success); position: absolute; left: 0;"></i> Atención al cliente 24/7</li>
-    </ul>
-  </div>
-  
-  <p style="font-style: italic; text-align: center; padding: 15px; background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border-radius: 10px; border-left: 4px solid var(--warning);">
-    <strong>🌟 El futuro es colaborativo:</strong> La verdadera potencia de la IA emerge cuando humanos y máquinas trabajan juntos, combinando la creatividad, intuición y empatía humana con la velocidad, precisión y capacidad de procesamiento de las inteligencias artificiales.
-  </p>
-  
-  <p>Estamos apenas en los primeros capítulos de esta revolución tecnológica. Las herramientas que hoy nos parecen avanzadas serán los cimientos sobre los que se construirán las innovaciones del mañana, abriendo posibilidades que hoy apenas podemos imaginar.</p>
-</section>
-<script>
-function mostrarInfo(ia) {
-  console.log("Mostrando información de:", ia);
-  
-  // Ocultar toda la información primero
-  document.querySelectorAll('.info-ia').forEach(info => {
-    info.classList.remove('active');
-  });
-  
-  // Desactivar todos los botones (quitar clase active y estilos)
-  document.querySelectorAll('.boton-ia').forEach(boton => {
-    boton.classList.remove('active');
-    boton.style.background = '#e5e7eb';
-    boton.style.color = '#1f2937';
-    boton.style.boxShadow = 'none';
-  });
-  
-  // Mostrar la información seleccionada
-  const infoElement = document.getElementById(`info-${ia}`);{}
-  if (infoElement) {
-    infoElement.classList.add('active');
-  }
-  
-  // Activar el botón seleccionado (aplicar estilo azul)
-  const botonElement = document.querySelector(`.boton-ia[onclick="mostrarInfo('${ia}')"]`);
-  if (botonElement) {
-    botonElement.classList.add('active');
-    botonElement.style.background = 'linear-gradient(to right, var(--primary), var(--secondary))';
-    botonElement.style.color = 'white';
-    botonElement.style.boxShadow = '0 4px 8px rgba(37, 99, 235, 0.3)';
-  }
-}
+    let animals = []; // cuerpos en juego
+    let score = 0;
+    let nextAnimalType = getRandomAnimalType(0, 2);
+    let animId = null;
+    let lastTs = 0;
+    let gameOver = false;
 
-// Efectos de hover para los botones (solo si no están activos)
-document.querySelectorAll('.boton-ia').forEach(boton => {
-  boton.addEventListener('mouseenter', function() {
-    if (!this.classList.contains('active')) {
-      this.style.background = '#d1d5db';
-      this.style.transform = 'translateY(-2px)';
+    // ====== Constantes de física (en unidades de píxeles y segundos) ======
+    const GRAVITY = 1400;         // px/s^2
+    const RESTITUTION = 0.7;      // coef. de rebote entre círculos
+    const WALL_RESTITUTION = 0.6; // paredes/suelo
+    const FRICTION_T = 0.995;     // fricción tangencial leve
+    const REST_THRESHOLD = 15;    // velocidad (px/s) por debajo de la cual pasa a reposo
+    const MERGE_COOLDOWN = 180;   // ms, evita bugs de recombinación instantánea
+
+    // ====== Utilidades ======
+    function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+    function getRandomAnimalType(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+    // ====== UI del próximo animal ======
+    function updateNextAnimalDisplay() {
+      const t = animalTypes[nextAnimalType];
+      nextAnimalDisplay.style.width = (t.radius * 2) + 'px';
+      nextAnimalDisplay.style.height = (t.radius * 2) + 'px';
+
+      if (t.img) {
+        nextAnimalDisplay.style.backgroundImage = `url(${t.img})`;
+        nextAnimalDisplay.style.backgroundSize = "140%";
+        nextAnimalDisplay.style.backgroundPosition = "center";
+        nextAnimalDisplay.textContent = "";
+      } else {
+        nextAnimalDisplay.style.backgroundImage = "";
+        nextAnimalDisplay.style.backgroundColor = t.color;
+        nextAnimalDisplay.textContent = "";
+      }
+
+      nextAnimalDisplay.style.transform = 'translateZ(0) scale(1.02)';
+      setTimeout(() => nextAnimalDisplay.style.transform = 'translateZ(0) scale(1)', 120);
     }
-  });
-  
-  boton.addEventListener('mouseleave', function() {
-    if (!this.classList.contains('active')) {
-      this.style.background = '#e5e7eb';
-      this.style.transform = 'translateY(0)';
-    }
-  });
-});
 
-// Inicializar con ChatGPT mostrado por defecto
-document.addEventListener('DOMContentLoaded', function() {
-  mostrarInfo('chatgpt');
-});
-</script>
+
+    // ====== Creación de un cuerpo/animal ======
+    function createAnimal(typeIndex, x, y, opts = {}) {
+      const t = animalTypes[typeIndex];
+      const el = document.createElement('div');
+      el.className = 'animal moving';
+      el.style.width = el.style.height = (t.radius * 2) + 'px';
+
+      if (t.img) {
+        el.style.backgroundImage = `url(${t.img})`;
+        el.style.backgroundSize = "140%";  // hace zoom dentro del círculo
+el.style.backgroundPosition = "center";
+
+        el.style.backgroundColor = "transparent";
+      } else {
+        el.style.backgroundColor = t.color;
+      }
+
+      el.innerHTML = ""; // quitamos texto/nombre
+      gameContainer.appendChild(el);
+
+      const body = {
+        id: Math.random().toString(36).slice(2),
+        element: el,
+        type: typeIndex,
+        r: t.radius,
+        x: x,
+        y: y,
+        vx: opts.vx ?? 0,
+        vy: opts.vy ?? 0,
+        mass: t.radius * t.radius,
+        resting: false,
+        
+        canMergeAt: performance.now() + (opts.noCooldown ? 0 : MERGE_COOLDOWN),
+      };
+
+      positionElement(body);
+      animals.push(body);
+      return body;
+    }
+
+
+    function positionElement(b) {
+      b.element.style.left = (b.x - b.r) + 'px';
+      b.element.style.top = (b.y - b.r) + 'px';
+      if (b.resting) b.element.classList.remove('moving');
+      else b.element.classList.add('moving');
+    }
+
+    // ====== Entrada: soltar animal con clic/tap ======
+    function onDrop(ev) {
+      if (gameOver) return;
+      const rect = gameContainer.getBoundingClientRect();
+      const clientX = (ev.touches?.[0]?.clientX) ?? ev.clientX;
+      let x = clientX - rect.left;
+
+      const r = animalTypes[nextAnimalType].radius;
+      x = clamp(x, r + 1, gameContainer.clientWidth - r - 1);
+
+      // Aparece arriba del todo, ligeramente fuera del contenedor para caer natural
+      createAnimal(nextAnimalType, x, -r - 2, { vx: 0, vy: 0 });
+
+      // El siguiente puede subir de nivel máximo hasta +1 para no saltar demasiado
+      nextAnimalType = getRandomAnimalType(0, Math.min(animalTypes.length - 1, nextAnimalType + 1));
+      updateNextAnimalDisplay();
+    }
+
+    // ====== Bucle principal con requestAnimationFrame ======
+    function loop(ts) {
+      if (!lastTs) lastTs = ts;
+      const dt = Math.min((ts - lastTs) / 1000, 0.033); // cap ~30ms
+      lastTs = ts;
+
+      stepPhysics(dt);
+      animId = requestAnimationFrame(loop);
+    }
+
+    function stepPhysics(dt) {
+      const W = gameContainer.clientWidth;
+      const H = gameContainer.clientHeight;
+
+      // Integración simple + gravedad
+      for (const b of animals) {
+        // Quita estado de reposo si vuelve a moverse
+        if (Math.abs(b.vx) > REST_THRESHOLD || Math.abs(b.vy) > REST_THRESHOLD) b.resting = false;
+
+        // Gravedad siempre
+        b.vy += GRAVITY * dt;
+
+        // Integración
+        b.x += b.vx * dt;
+        b.y += b.vy * dt;
+
+        // Colisiones con paredes laterales
+        if (b.x - b.r < 0) {
+          b.x = b.r;
+          b.vx = -b.vx * WALL_RESTITUTION;
+        } else if (b.x + b.r > W) {
+          b.x = W - b.r;
+          b.vx = -b.vx * WALL_RESTITUTION;
+        }
+
+        // Suelo
+        if (b.y + b.r > H) {
+          b.y = H - b.r;
+          b.vy = -b.vy * WALL_RESTITUTION;
+          if (Math.abs(b.vy) < REST_THRESHOLD) {
+            b.vy = 0;
+            // un toque de fricción al tocar suelo
+            b.vx *= 0.9;
+            if (Math.abs(b.vx) < REST_THRESHOLD) b.vx = 0;
+            b.resting = true;
+          }
+        }
+
+        // Fricción ligera
+        b.vx *= FRICTION_T;
+
+        positionElement(b);
+      }
+
+      // Colisiones entre círculos y posibles combinaciones
+      resolveCircleInteractions();
+
+      // Comprobar Game Over (si un objeto en reposo toca la zona superior)
+      for (const b of animals) {
+        if (b.resting && b.y - b.r <= 10) {
+          triggerGameOver();
+          break;
+        }
+      }
+    }
+
+    function resolveCircleInteractions() {
+      // Hacemos un único merge por frame para evitar cascadas caóticas
+      let mergedThisFrame = false;
+      for (let i = 0; i < animals.length; i++) {
+        for (let j = i + 1; j < animals.length; j++) {
+          const a = animals[i];
+          const b = animals[j];
+          if (!a || !b) continue;
+
+          const dx = b.x - a.x;
+          const dy = b.y - a.y;
+          const dist = Math.hypot(dx, dy) || 0.0001;
+          const minDist = a.r + b.r;
+
+          if (dist < minDist) {
+            // Intento de combinación primero
+            const now = performance.now();
+            if (!mergedThisFrame && a.type === b.type && a.type < animalTypes.length - 1 && now >= a.canMergeAt && now >= b.canMergeAt) {
+              doMerge(i, j);
+              mergedThisFrame = true;
+              // reiniciar bucles porque el array cambió
+              i = -1;
+              break;
+            }
+
+            // Resolver colisión elástica simplificada
+            const nx = dx / dist;
+            const ny = dy / dist;
+            const overlap = minDist - dist;
+
+            // Separación proporcional a masas
+            const m1 = a.mass, m2 = b.mass, mt = m1 + m2;
+            a.x -= nx * (overlap * (m2 / mt));
+            a.y -= ny * (overlap * (m2 / mt));
+            b.x += nx * (overlap * (m1 / mt));
+            b.y += ny * (overlap * (m1 / mt));
+
+            // Componentes normal y tangencial
+            const v1n = a.vx * nx + a.vy * ny;
+            const v2n = b.vx * nx + b.vy * ny;
+            const v1t = -a.vx * ny + a.vy * nx; // tangente (perp. a la normal)
+            const v2t = -b.vx * ny + b.vy * nx;
+
+            // Colisión 1D sobre la normal con coef. de restitución
+            const e = RESTITUTION;
+            const u1 = v1n, u2 = v2n;
+            const newV1n = (u1 * (m1 - e * m2) + (1 + e) * m2 * u2) / (m1 + m2);
+            const newV2n = (u2 * (m2 - e * m1) + (1 + e) * m1 * u1) / (m1 + m2);
+
+            // Reconstruir velocidades cartesianas (tangencial casi sin pérdidas, un poco de fricción)
+            a.vx = newV1n * nx + (v1t * 0.98) * -ny;
+            a.vy = newV1n * ny + (v1t * 0.98) * nx;
+            b.vx = newV2n * nx + (v2t * 0.98) * -ny;
+            b.vy = newV2n * ny + (v2t * 0.98) * nx;
+
+            a.resting = b.resting = false; // tras choque vuelven a moverse
+            positionElement(a);
+            positionElement(b);
+          }
+        }
+      }
+    }
+
+    function doMerge(idxA, idxB) {
+      const a = animals[idxA];
+      const b = animals[idxB];
+      if (!a || !b) return;
+
+      const newType = a.type + 1;
+      const t = animalTypes[newType];
+
+      // Centro ponderado por masa para evitar saltos bruscos
+      const mt = a.mass + b.mass;
+      const cx = (a.x * a.mass + b.x * b.mass) / mt;
+      const cy = (a.y * a.mass + b.y * b.mass) / mt;
+
+      // Velocidad promedio, con un pequeño impulso hacia arriba
+      const nvx = (a.vx + b.vx) * 0.5;
+      const nvy = Math.min(-220, -Math.abs((a.vy + b.vy) * 0.5) - 120);
+
+      // Eliminar elementos antiguos del DOM y del array
+      if (a.element.parentNode) a.element.parentNode.removeChild(a.element);
+      if (b.element.parentNode) b.element.parentNode.removeChild(b.element);
+
+      // Asegurar eliminación sin romper índices: quitar el más grande primero
+      const hi = Math.max(idxA, idxB);
+      const lo = Math.min(idxA, idxB);
+      animals.splice(hi, 1);
+      animals.splice(lo, 1);
+
+      // Crear nuevo combinado
+      const newBody = createAnimal(newType, cx, cy, { vx: nvx, vy: nvy });
+      newBody.canMergeAt = performance.now() + MERGE_COOLDOWN; // evita re-merge instantáneo
+
+      // Puntuación
+      score += t.points;
+      scoreDisplay.textContent = `Puntuación: ${score}`;
+    }
+
+    // ====== Game Over ======
+    function triggerGameOver() {
+      if (gameOver) return;
+      gameOver = true;
+      cancelAnimationFrame(animId);
+      animId = null;
+      finalScoreDisplay.textContent = `Puntuación: ${score}`;
+      gameOverDisplay.style.display = 'flex';
+    }
+
+    // ====== Reinicio ======
+    function resetGame() {
+      gameOver = false;
+      score = 0;
+      scoreDisplay.textContent = 'Puntuación: 0';
+      nextAnimalType = getRandomAnimalType(0, 2);
+      updateNextAnimalDisplay();
+
+      // Eliminar animales del DOM
+      for (const b of animals) {
+        if (b.element.parentNode) b.element.parentNode.removeChild(b.element);
+      }
+      animals = [];
+
+      lastTs = 0;
+      gameOverDisplay.style.display = 'none';
+
+      if (animId) cancelAnimationFrame(animId);
+      animId = requestAnimationFrame(loop);
+    }
+
+    // ====== Inicialización ======
+    function init() {
+      updateNextAnimalDisplay();
+
+      // Escuchar una sola vez (evitamos listeners duplicados al reiniciar)
+      gameContainer.addEventListener('click', onDrop, { passive: true });
+      gameContainer.addEventListener('touchstart', onDrop, { passive: true });
+      restartBtn.addEventListener('click', resetGame);
+
+      animId = requestAnimationFrame(loop);
+    }
+
+    window.addEventListener('load', init);
+  </script>
 </body>
+
 </html>

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia de los Lenguajes de Programación</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a237e, #4a6fa5);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: #4a6fa5;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+            margin: 0 auto;
+            max-width: 1000px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background: #4a6fa5;
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            margin-bottom: 60px;
+            position: relative;
+            width: 100%;
+            display: flex;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            justify-content: flex-start;
+        }
+        
+        .timeline-item:nth-child(even) {
+            justify-content: flex-end;
+        }
+        
+        .timeline-content {
+            width: 45%;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            border-left: 5px solid #4fc3f7;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            border-right: 5px solid #1a237e;
+        }
+        
+        .year {
+            position: absolute;
+            top: -20px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #1a237e;
+            background: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline-item:nth-child(odd) .year {
+            right: -70px;
+        }
+        
+        .timeline-item:nth-child(even) .year {
+            left: -70px;
+        }
+        
+        h3 {
+            color: #1a237e;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .language-info {
+            margin-bottom: 15px;
+        }
+        
+        .language-info p {
+            margin-bottom: 10px;
+        }
+        
+        .icon {
+            font-size: 2rem;
+            color: #4a6fa5;
+            margin-bottom: 15px;
+        }
+        
+        .inventor {
+            font-style: italic;
+            color: #666;
+        }
+        
+        .impact {
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #1a237e;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                justify-content: flex-start;
+                padding-left: 70px;
+            }
+            
+            .timeline-content {
+                width: 100%;
+            }
+            
+            .timeline-item:nth-child(odd) .year,
+            .timeline-item:nth-child(even) .year {
+                left: -10px;
+                right: auto;
+            }
+            
+            .timeline-item:nth-child(even) .timeline-content {
+                border-right: none;
+                border-left: 5px solid #1a237e;
+            }
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        
+        .btn {
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #1a237e;
+        }
+        
+        .highlight {
+            background-color: #ffeb3b;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Historia de los Lenguajes de Programación</h1>
+            <p class="subtitle">Un viaje a través del tiempo explorando la evolución de los lenguajes que dan vida a la tecnología</p>
+        </header>
+        
+        <div class="controls">
+            <button class="btn" onclick="filterTimeline('all')">Todos</button>
+            <button class="btn" onclick="filterTimeline('early')">Época Temprana</button>
+            <button class="btn" onclick="filterTimeline('modern')">Lenguajes Modernos</button>
+            <button class="btn" onclick="filterTimeline('recent')">Recientes</button>
+        </div>
+        
+        <div class="timeline">
+            <!-- Años 40-50 -->
+            <div class="timeline-item" data-era="early">
+                <div class="timeline-content">
+                    <div class="year">1940s</div>
+                    <div class="icon"><i class="fas fa-calculator"></i></div>
+                    <h3>Plankalkül</h3>
+                    <div class="language-info">
+                        <p>Primer lenguaje de programación de alto nivel diseñado por <span class="inventor">Konrad Zuse</span></p>
+                        <p>Desarrollado para propósitos de ingeniería civil</p>
+                    </div>
+                    <div class="impact">
+                        <p><strong>Impacto:</strong> Sentó las bases para los lenguajes de programación modernos</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-era="early">
+                <div class="timeline-content">
+                    <div class="year">1957</div>
+                    <div class="icon"><i class="fas fa-project-diagram"></i></div>
+                    <h3>FORTRAN</h3>
+                    <div class="language-info">
+                        <p>Primer lenguaje de programación de alto nivel ampliamente utilizado</p>
+                        <p>Creado por <span class="inventor">John Backus</span> e IBM para computación científica</p>
+                    </div>
+                    <div class="impact">
+                        <p><strong>Impacto:</strong> Revolucionó la programación científica y de ingeniería</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Años 60 -->
+            <div class="timeline-item" data-era="early">
+                <div class="timeline-content">
+                    <div class="year">1958</div>
+                    <div class="icon"><i class="fas fa-sitemap"></i></div>
+                    <h3>LISP</h3>
+                    <div class="language-info">
+                        <p>Diseñado por <span class="inventor">John McCarthy</span> para investigación en inteligencia artificial</p>
+                        <p>Segundo lenguaje de programación de alto nivel más antiguo</p>
+                    </div>
+                    <div class="impact">
+                        <p><strong>Impacto:</strong> Fundamental para IA y todavía influyente hoy</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-era="early">
+                <div class="timeline-content">
+                    <div class="year">1964</div>
+                    <div class="icon"><i class="fas fa-business-time"></i></div>
+                    <h3>BASIC</h3>
+                    <div class="language-info">
+                        <p>Creado por <span class="inventor">John Kemeny</span> y <span class="inventor">Thomas Kurtz</span></p>
+                        <p>Diseñado para facilitar la programación a estudiantes</p>
+                    </div>
+                    <div class="impact">
+                        <p><strong>Impacto:</strong> Hizo la programación accesible para no científicos</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Años 70 -->
+            <div class="timeline-item" data-era="modern">
+                <div class="timeline-content">
+                    <div class="year">1970</div>
+                    <div class="icon"><i class="fas fa-code"></i></div>
+                    <h3>Pascal</h3>
+                    <div class="language-info">
+                        <p>Diseñado por <span class="inventor">Niklaus Wirth</span> para enseñar programación estructurada</p>
+                        <p>Enfatizaba buenas prácticas de programación</p>
+                    </div>
+                    <div class="impact">
+                        <p><strong>Impacto:</strong> Popular en educación y desarrollo de software comercial</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-era="modern">
+                <div class="timeline-content">
+                    <div class="year">1972</div>
+                    <div class="icon"><i class="fas fa-cogs"></i></div>
+                    <h3>C</h3>
+                    <div class="language-info">
+                        <p>Desarrollado por <span class="inventor">Dennis Ritchie</span> en Bell Labs</p>
+                        <p>Diseñado para implementar el sistema Unix</p>
+                    </div>
+                    <div class="impact">
+                        <p><strong>Impacto:</strong> Uno de los lenguajes más influyentes, base para muchos otros</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Años 80 -->
+            <div class="timeline-item" data-era="modern">
+                <div class="timeline-content">
+                    <div class="year">1983</div>
+                    <div class="icon"><i class="fas fa-plus"></i></div>
+                    <h3>C++</h3>
+                    <div class="language-info">
+                        <p>Extensión de C creada por <span class="inventor">Bjarne Stroustrup</span></p>
+                        <p>Introdujo programación orientada a objetos a C</p>
+                    </div>
+                    <div class="impact">
+                        <p><strong>Impacto:</strong> Dominante en desarrollo de software de sistemas y aplicaciones</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-era="modern">
+                <div class="timeline-content">
+                    <div class="year">1987</div>
+                    <div class="icon"><i class="fas fa-table"></i></div>
+                    <h3>Perl</h3>
+                    <div class="language-info">
+                        <p>Creado por <span class="inventor">Larry Wall</span> para procesamiento de texto</p>
+                        <p>Conocido por su flexibilidad y expresividad</p>
+                    </div>
+                    <div class="impact">
+                        <p><strong>Impacto:</strong> Ampliamente usado en scripting y procesamiento de texto</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Años 90 -->
+            <div class="timeline-item" data-era="modern">
+                <div class="timeline-content">
+                    <div class="year">1991</div>
+                    <div class="icon"><i class="fab fa-python"></i></div>
+                    <h3>Python</h3>
+                    <div class="language-info">
+                        <p>Creado por <span class="inventor">Guido van Rossum</span></p>
+                        <p>Enfatiza legibilidad del código y productividad del desarrollador</p>
+                    </div>
+                    <div class="impact">
+                        <p><strong>Impacto:</strong> Extremadamente popular en IA, ciencia de datos y web</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-era="modern">
+                <div class="timeline-content">
+                    <div class="year">1995</div>
+                    <div class="icon"><i class="fab fa-js"></i></div>
+                    <h3>JavaScript</h3>
+                    <div class="language-info">
+                        <p>Creado por <span class="inventor">Brendan Eich</span> en Netscape</p>
+                        <p>Desarrollado en sólo 10 días inicialmente</p>
+                    </div>
+                    <div class="impact">
+                        <p><strong>Impacto:</strong> Lenguaje dominante para desarrollo web frontend</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-era="modern">
+                <div class="timeline-content">
+                    <div class="year">1995</div>
+                    <div class="icon"><i class="fab fa-java"></i></div>
+                    <h3>Java</h3>
+                    <div class="language-info">
+                        <p>Desarrollado por <span class="inventor">James Gosling</span> en Sun Microsystems</p>
+                        <p>Diseñado con el principio "escribe una vez, ejecuta en cualquier lugar"</p>
+                    </div>
+                    <div class="impact">
+                        <p><strong>Impacto:</strong> Revolucionó el desarrollo empresarial y móvil (Android)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Años 2000 -->
+            <div class="timeline-item" data-era="recent">
+                <div class="timeline-content">
+                    <div class="year">2000</div>
+                    <div class="icon"><i class="fas fa-sharp"></i></div>
+                    <h3>C#</h3>
+                    <div class="language-info">
+                        <p>Desarrollado por <span class="inventor">Microsoft</span> liderado por Anders Hejlsberg</p>
+                        <p>Parte de la iniciativa .NET</p>
+                    </div>
+                    <div class="impact">
+                        <p><strong>Impacto:</strong> Dominante en desarrollo de aplicaciones Windows y videojuegos (Unity)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-era="recent">
+                <div class="timeline-content">
+                    <div class="year">2009</div>
+                    <div class="icon"><i class="fab fa-google"></i></div>
+                    <h3>Go</h3>
+                    <div class="language-info">
+                        <p>Creado por <span class="inventor">Google</span> (Robert Griesemer, Rob Pike, Ken Thompson)</p>
+                        <p>Diseñado para eficiencia y programación concurrente</p>
+                    </div>
+                    <div class="impact">
+                        <p><strong>Impacto:</strong> Popular para servicios backend y herramientas de línea de comandos</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-era="recent">
+                <div class="timeline-content">
+                    <div class="year">2012</div>
+                    <div class="icon"><i class="fas fa-bolt"></i></div>
+                    <h3>TypeScript</h3>
+                    <div class="language-info">
+                        <p>Desarrollado por <span class="inventor">Microsoft</span> (Anders Hejlsberg)</p>
+                        <p>Superconjunto tipado de JavaScript que compila a JS</p>
+                    </div>
+                    <div class="impact">
+                        <p><strong>Impacto:</strong> Mejora el desarrollo a gran escala de aplicaciones JavaScript</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-era="recent">
+                <div class="timeline-content">
+                    <div class="year">2014</div>
+                    <div class="icon"><i class="fas fa-swift"></i></div>
+                    <h3>Swift</h3>
+                    <div class="language-info">
+                        <p>Creado por <span class="inventor">Apple</span> para desarrollo iOS/macOS</p>
+                        <p>Diseñado para ser seguro, rápido y expresivo</p>
+                    </div>
+                    <div class="impact">
+                        <p><strong>Impacto:</strong> Reemplazó a Objective-C como lenguaje principal para desarrollo Apple</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Infografía: Historia de los Lenguajes de Programación</p>
+            <p>© 2023 - Diseñado para fines educativos</p>
+            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">Esta presentación fue hecha con DeepSeek</p>
+        </footer>
+    </div>
+
+    <script>
+        function filterTimeline(era) {
+            const items = document.querySelectorAll('.timeline-item');
+            
+            items.forEach(item => {
+                if (era === 'all') {
+                    item.style.display = 'flex';
+                } else if (item.getAttribute('data-era') === era) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+        
+        // Efecto de aparición al hacer scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const timelineItems = document.querySelectorAll('.timeline-content');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            timelineItems.forEach(item => {
+                item.style.opacity = 0;
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(item);
+            });
+        });
+    </script>
+</body>
+</html>

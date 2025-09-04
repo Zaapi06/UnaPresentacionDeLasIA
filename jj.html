@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorando las Inteligencias Artificiales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3f7;
+            --dark: #1a237e;
+            --light: #e3f2fd;
+            --text: #263238;
+            --background: #f5f7fa;
+            --success: #4caf50;
+            --danger: #f44336;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .hero {
+            padding-top: 120px;
+            text-align: center;
+            background: linear-gradient(rgba(26, 35, 126, 0.7), rgba(26, 35, 126, 0.9)), url('https://images.unsplash.com/photo-1677442135135-416f8aa26a5b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1700&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding-bottom: 80px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeIn 1.5s;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            animation: fadeIn 2s;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #29b6f6;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--dark);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .card h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 50px auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline-content h3 {
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        
+        .game {
+            background-color: var(--light);
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .game-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+        }
+        
+        .game-header {
+            margin-bottom: 20px;
+        }
+        
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .cell {
+            aspect-ratio: 1;
+            background-color: var(--light);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .cell:hover {
+            background-color: #bbdefb;
+        }
+        
+        .cell.x {
+            color: var(--primary);
+        }
+        
+        .cell.o {
+            color: var(--danger);
+        }
+        
+        .game-info {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .game-status {
+            font-weight: bold;
+            margin-bottom: 10px;
+            min-height: 30px;
+        }
+        
+        .scores {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+        
+        .score-box {
+            background: var(--light);
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .game-container {
+                width: 90%;
+            }
+            
+            .cell {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <span>IA Explora</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#introduccion">Introducción</a></li>
+                <li><a href="#tipos">Tipos de IA</a></li>
+                <li><a href="#historia">Historia</a></li>
+                <li><a href="#aplicaciones">Aplicaciones</a></li>
+                <li><a href="#juego">Juego</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Explorando el Mundo de la Inteligencia Artificial</h1>
+            <p>Descubre cómo las máquinas están aprendiendo a pensar, razonar y crear como los humanos</p>
+            <a href="#introduccion" class="btn">Comenzar el Viaje</a>
+        </div>
+    </section>
+
+    <section id="introduccion" class="container">
+        <h2 class="section-title">¿Qué es la Inteligencia Artificial?</h2>
+        <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+            <p>La Inteligencia Artificial (IA) es un campo de la informática que se dedica a crear sistemas capaces de realizar tareas que normalmente requieren inteligencia humana. Estas tareas incluyen el aprendizaje, el razonamiento, la percepción, la comprensión del lenguaje natural y la resolución de problemas.</p>
+            <p>La IA no es una tecnología futura, sino que ya está presente en nuestras vidas cotidianas, desde asistentes virtuales hasta sistemas de recomendación en plataformas de streaming.</p>
+        </div>
+        
+        <div class="cards">
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80');"></div>
+                <div class="card-content">
+                    <h3>Aprendizaje Automático</h3>
+                    <p>Los sistemas aprenden y mejoran automáticamente a partir de la experiencia sin ser programados explícitamente.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');"></div>
+                <div class="card-content">
+                    <h3>Procesamiento de Lenguaje Natural</h3>
+                    <p>Capacidad de las máquinas para entender, interpretar y generar lenguaje humano de manera significativa.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://co-media.hptiendaenlinea.com/magefan_blog/hero-reconocimiento_facial.jpg');"></div>
+                <div class="card-content">
+                    <h3>Visión por Computadora</h3>
+                    <p>Las máquinas pueden ver e interpretar el mundo visual a través de cámaras, imágenes y videos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tipos" style="background-color: var(--light); padding: 80px 0;">
+        <div class="container">
+            <h2 class="section-title">Tipos de Inteligencia Artificial</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-content">
+                        <h3>IA Débil o Estrecha</h3>
+                        <p>Diseñada para realizar una tarea específica. Ejemplos: asistentes virtuales, sistemas de recomendación, reconocimiento facial.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3>IA General o Fuerte</h3>
+                        <p>Capacidad de entender, aprender y aplicar el conocimiento en diferentes contextos, similar a la inteligencia humana.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Súper Inteligencia Artificial</h3>
+                        <p>Hypotética IA que superaría la inteligencia humana en prácticamente todos los campos de interés.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="historia" class="container">
+        <h2 class="section-title">Linea de Tiempo de la IA</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>1956: Nacimiento de la IA</h3>
+                    <p>El término "Inteligencia Artificial" fue acuñado por John McCarthy en la conferencia de Dartmouth.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>1997: Deep Blue vence al campeón de ajedrez</h3>
+                    <p>La supercomputadora de IBM venció a Garry Kasparov, el campeón mundial de ajedrez.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>2011: Watson gana Jeopardy!</h3>
+                    <p>El sistema de IBM derrotó a los campeones humanos en el juego de preguntas y respuestas.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>2016: AlphaGo vence a campeón de Go</h3>
+                    <p>El programa de DeepMind venció a Lee Sedol, uno de los mejores jugadores del mundo del juego de Go.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>2020s: Expansión de GPT y modelos de lenguaje</h3>
+                    <p>Modelos como GPT-3 y GPT-4 demostraron capacidades avanzadas de generación de lenguaje natural.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="aplicaciones" style="background-color: var(--light); padding: 80px 0;">
+        <div class="container">
+            <h2 class="section-title">Aplicaciones de la IA</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');"></div>
+                    <div class="card-content">
+                        <h3>Salud</h3>
+                        <p>Diagnóstico médico, descubrimiento de fármacos, medicina personalizada y monitoreo de pacientes.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1563014959-7aaa83350992?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80');"></div>
+                    <div class="card-content">
+                        <h3>Transporte</h3>
+                        <p>Vehículos autónomos, optimización de rutas, gestión del tráfico y predicción de mantenimiento.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1434626881859-194d67b2b86f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80');"></div>
+                    <div class="card-content">
+                        <h3>Educación</h3>
+                        <p>Plataformas de aprendizaje adaptativo, tutorías inteligentes y automatización de tareas administrativas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="juego" class="game">
+        <div class="container">
+            <h2 class="section-title">Demostración: IA en Juegos</h2>
+            <div class="game-container">
+                <div class="game-header">
+                    <h3>Tres en Raya vs IA</h3>
+                    <p>Demuestra tus habilidades contra nuestra inteligencia artificial</p>
+                </div>
+                
+                <div class="game-info">
+                    <div class="game-status" id="status">Tu turno (X)</div>
+                    <div class="scores">
+                        <div class="score-box">
+                            <div>Jugador (X)</div>
+                            <div id="player-score">0</div>
+                        </div>
+                        <div class="score-box">
+                            <div>Empates</div>
+                            <div id="tie-score">0</div>
+                        </div>
+                        <div class="score-box">
+                            <div>IA (O)</div>
+                            <div id="ai-score">0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-board" id="board">
+                    <div class="cell" data-cell-index="0"></div>
+                    <div class="cell" data-cell-index="1"></div>
+                    <div class="cell" data-cell-index="2"></div>
+                    <div class="cell" data-cell-index="3"></div>
+                    <div class="cell" data-cell-index="4"></div>
+                    <div class="cell" data-cell-index="5"></div>
+                    <div class="cell" data-cell-index="6"></div>
+                    <div class="cell" data-cell-index="7"></div>
+                    <div class="cell" data-cell-index="8"></div>
+                </div>
+                
+                <button id="reset-btn" class="btn">Reiniciar Juego</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2023 Exploración de Inteligencias Artificiales. Todos los derechos reservados.</p>
+        <p>Página web creada con fines educativos y de divulgación.</p>
+        <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">Esta presentación fue hecha con DeepSeek y ChatGPT</p>
+    </footer>
+
+    <script>
+        // Variables del juego
+        const board = document.getElementById('board');
+        const cells = document.querySelectorAll('.cell');
+        const statusText = document.getElementById('status');
+        const resetBtn = document.getElementById('reset-btn');
+        const playerScoreElem = document.getElementById('player-score');
+        const aiScoreElem = document.getElementById('ai-score');
+        const tieScoreElem = document.getElementById('tie-score');
+        
+        // Combinaciones ganadoras
+        const winConditions = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Filas
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columnas
+            [0, 4, 8], [2, 4, 6]             // Diagonales
+        ];
+        
+        // Estado del juego
+        let options = ["", "", "", "", "", "", "", "", ""];
+        let currentPlayer = "X";
+        let running = false;
+        let scores = { player: 0, ai: 0, tie: 0 };
+        
+        // Inicializar juego
+        initializeGame();
+        
+        function initializeGame() {
+            cells.forEach(cell => cell.addEventListener('click', cellClicked));
+            resetBtn.addEventListener('click', restartGame);
+            statusText.textContent = `Tu turno (${currentPlayer})`;
+            running = true;
+        }
+        
+        function cellClicked() {
+            const cellIndex = this.getAttribute("data-cell-index");
+            
+            if (options[cellIndex] !== "" || !running || currentPlayer === "O") {
+                return;
+            }
+            
+            updateCell(this, cellIndex);
+            checkWinner();
+            
+            // Turno de la IA si el juego continúa
+            if (running && currentPlayer === "O") {
+                setTimeout(aiTurn, 700); // Pequeña pausa para simular "pensamiento"
+            }
+        }
+        
+        function updateCell(cell, index) {
+            options[index] = currentPlayer;
+            cell.textContent = currentPlayer;
+            cell.classList.add(currentPlayer.toLowerCase());
+        }
+        
+        function changePlayer() {
+            currentPlayer = currentPlayer === "X" ? "O" : "X";
+            if (currentPlayer === "X") {
+                statusText.textContent = "Tu turno (X)";
+            } else {
+                statusText.textContent = "Turno de la IA (O)";
+            }
+        }
+        
+        function checkWinner() {
+            let roundWon = false;
+            let winningLine = null;
+            
+            for (let i = 0; i < winConditions.length; i++) {
+                const condition = winConditions[i];
+                const cellA = options[condition[0]];
+                const cellB = options[condition[1]];
+                const cellC = options[condition[2]];
+                
+                if (cellA === "" || cellB === "" || cellC === "") {
+                    continue;
+                }
+                if (cellA === cellB && cellB === cellC) {
+                    roundWon = true;
+                    winningLine = condition;
+                    break;
+                }
+            }
+            
+            if (roundWon) {
+                statusText.textContent = `${currentPlayer === "X" ? "¡Ganaste!" : "La IA ganó!"}`;
+                highlightWinningCells(winningLine);
+                running = false;
+                
+                // Actualizar puntuación
+                if (currentPlayer === "X") {
+                    scores.player++;
+                    playerScoreElem.textContent = scores.player;
+                } else {
+                    scores.ai++;
+                    aiScoreElem.textContent = scores.ai;
+                }
+            } else if (!options.includes("")) {
+                statusText.textContent = "¡Empate!";
+                running = false;
+                scores.tie++;
+                tieScoreElem.textContent = scores.tie;
+            } else {
+                changePlayer();
+            }
+        }
+        
+        function highlightWinningCells(winningLine) {
+            winningLine.forEach(index => {
+                cells[index].style.backgroundColor = currentPlayer === "X" ? "#c8e6c9" : "#ffcdd2";
+            });
+        }
+        
+        function aiTurn() {
+            // Estrategia simple de IA
+            let availableCells = [];
+            for (let i = 0; i < options.length; i++) {
+                if (options[i] === "") {
+                    availableCells.push(i);
+                }
+            }
+            
+            if (availableCells.length > 0) {
+                // Primero, verificar si la IA puede ganar
+                for (let i of availableCells) {
+                    let testOptions = [...options];
+                    testOptions[i] = "O";
+                    if (checkWinCondition(testOptions, "O")) {
+                        makeMove(i);
+                        return;
+                    }
+                }
+                
+                // Luego, verificar si el jugador puede ganar y bloquear
+                for (let i of availableCells) {
+                    let testOptions = [...options];
+                    testOptions[i] = "X";
+                    if (checkWinCondition(testOptions, "X")) {
+                        makeMove(i);
+                        return;
+                    }
+                }
+                
+                // Intentar tomar el centro
+                if (availableCells.includes(4)) {
+                    makeMove(4);
+                    return;
+                }
+                
+                // Elegir una esquina disponible
+                const corners = [0, 2, 6, 8];
+                const availableCorners = corners.filter(i => availableCells.includes(i));
+                if (availableCorners.length > 0) {
+                    const randomCorner = availableCorners[Math.floor(Math.random() * availableCorners.length)];
+                    makeMove(randomCorner);
+                    return;
+                }
+                
+                // Elegir cualquier celda disponible aleatoriamente
+                const randomIndex = Math.floor(Math.random() * availableCells.length);
+                makeMove(availableCells[randomIndex]);
+            }
+        }
+        
+        function checkWinCondition(testOptions, player) {
+            for (let condition of winConditions) {
+                const [a, b, c] = condition;
+                if (testOptions[a] === player && testOptions[b] === player && testOptions[c] === player) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        function makeMove(index) {
+            options[index] = "O";
+            cells[index].textContent = "O";
+            cells[index].classList.add("o");
+            checkWinner();
+        }
+        
+        function restartGame() {
+            currentPlayer = "X";
+            options = ["", "", "", "", "", "", "", "", ""];
+            statusText.textContent = "Tu turno (X)";
+            
+            cells.forEach(cell => {
+                cell.textContent = "";
+                cell.classList.remove("x", "o");
+                cell.style.backgroundColor = "";
+            });
+            
+            running = true;
+        }
+        
+        // Animación de elementos al hacer scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeIn 1.5s forwards';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            // Observar todos los elementos con la clase 'card'
+            document.querySelectorAll('.card').forEach(card => {
+                card.style.opacity = '0';
+                observer.observe(card);
+            });
+            
+            // Observar todos los elementos con la clase 'timeline-content'
+            document.querySelectorAll('.timeline-content').forEach(item => {
+                item.style.opacity = '0';
+                observer.observe(item);
+            });
+            
+            // Observar el juego
+            const gameContainer = document.querySelector('.game-container');
+            gameContainer.style.opacity = '0';
+            observer.observe(gameContainer);
+        });
+    </script>
+</body>
+</html>
