@@ -356,7 +356,8 @@ el.style.backgroundPosition = "center";
     createAnimal(nextAnimalType, x, -r - 2, { vx: 0, vy: 0 });
 
     // El siguiente puede subir de nivel máximo hasta +1 para no saltar demasiado
-    nextAnimalType = getRandomAnimalType(0, Math.min(animalTypes.length - 1, nextAnimalType + 1));
+    nextAnimalType = getRandomAnimalType(0, 2);
+    
     updateNextAnimalDisplay();
 }
     // ====== Bucle principal con requestAnimationFrame ======
@@ -607,6 +608,7 @@ gameContainer.addEventListener('click', function(ev) {
 
 
 </html>
+
 
 
 
