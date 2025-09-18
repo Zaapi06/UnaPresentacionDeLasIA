@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChibiZoo🐾✨</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: url("https://raw.githubusercontent.com/Zaapi06/UnaPresentacionDeLasIA/main/gpt1.png") no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
+        
+        h1 {
+            color: #ff66a3;
+            text-shadow: 2px 2px 0px #fff;
+            margin-bottom: 10px;
+        }
+        
+        #game-container {
+            position: relative;
+            width: 400px;
+            height: 600px;
+            background: rgba(255, 255, 255, 0.2);
+            /* Fondo translúcido */
+            border-radius: 20px;
+            /* Bordes redondeados */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            /* Sombras suaves */
+            backdrop-filter: blur(10px);
+            /* Difuminado */
+            -webkit-backdrop-filter: blur(10px);
+            /* Compatibilidad Safari */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            /* Bordecito brillante */
+            border: 5px solid #66b3ff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            user-select: none;
+            touch-action: manipulation;
+        }
+        
+        #next-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 15px 0;
+            background-color: #ffccdd;
+            padding: 10px;
+            border-radius: 15px;
+            border: 3px solid #ff66a3;
+        }
+        
+        #next-label {
+            font-weight: bold;
+            color: #ff66a3;
+            margin-bottom: 5px;
+        }
+        
+        #next-animal {
+            width: 60px;
+            height: 60px;
+            background-color: #ffddcc;
+            border: 3px solid #ff66a3;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: #ff66a3;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: width .15s ease, height .15s ease, transform .15s ease;
+        }
+        
+        .animal {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-size: cover;
+            background-position: center;
+            will-change: transform, top, left;
+            transition: transform 0.12s;
+            pointer-events: none;
+        }
+        
+        .animal.moving {
+            animation: pulse 0.5s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.05);
+            }
+        }
+        
+        #score-container {
+            background-color: #ccffcc;
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 3px solid #66cc66;
+            margin-bottom: 15px;
+        }
+        
+        #score {
+            font-size: 24px;
+            color: #339933;
+            font-weight: bold;
+        }
+        
+        #instructions {
+            margin-top: 20px;
+            text-align: center;
+            color: #666;
+            max-width: 400px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        #restart-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff66a3;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, background-color .2s;
+        }
+        
+        #restart-btn:hover {
+            transform: scale(1.05);
+            background-color: #ff3385;
+        }
+        
+        .game-over {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 32px;
+            z-index: 100;
+            gap: 8px;
+        }
+        /* Ajustes responsivos para móviles */
+        
+        @media (max-width: 768px) {
+            #game-container {
+                transform: scale(0.8);
+                /* Reduce al 80% */
+                transform-origin: top center;
+            }
+            #next-container {
+                transform: scale(0.9);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            #game-container {
+                transform: scale(0.65);
+                /* Reduce más en móviles pequeños */
+                transform-origin: top center;
+            }
+            #next-container {
+                transform: scale(0.8);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>ChibiZoo 🐾✨</h1>
+
+    <div id="score-container">
+        <div id="score">Puntuación: 0</div>
+    </div>
+
+    <div id="next-container">
+        <div id="next-label">Próximo Animalito</div>
+        <div id="next-animal">?</div>
+    </div>
+
+    <div id="game-container">
+        <div class="game-over" id="game-over">
+            <div>¡Game Over!</div>
+            <div id="final-score">Puntuación: 0</div>
+        </div>
+    </div>
+
+    <button id="restart-btn">Reiniciar Juego</button>
+
+    <div id="instructions">
+        <p>Haz clic para soltar el animalito. Combina dos iguales para crear uno más grande.</p>
+        <p>Animalitos (de menor a mayor): Ratón, Nutria, Gato, Perro, Cerdo, Vaca, Oso, Elefante</p>
+    </div>
+
+    <script>
+        // ====== Configuración de animales ======
+        const animalTypes = [{
+            name: "",
+            radius: 20,
+            img: "https://raw.githubusercontent.com/Zaapi06/UnaPresentacionDeLasIA/main/raton.png",
+            points: 10
+        }, {
+            name: "",
+            radius: 30,
+            img: "https://raw.githubusercontent.com/Zaapi06/UnaPresentacionDeLasIA/main/nutria.png",
+            points: 20
+        }, {
+            name: "",
+            radius: 50,
+            img: "https://raw.githubusercontent.com/Zaapi06/UnaPresentacionDeLasIA/main/gato.png",
+            points: 50
+        }, {
+            name: "",
+            radius: 70,
+            img: "https://raw.githubusercontent.com/Zaapi06/UnaPresentacionDeLasIA/main/perro.png",
+            points: 100
+        }, {
+            name: "",
+            radius: 90,
+            img: "https://raw.githubusercontent.com/Zaapi06/UnaPresentacionDeLasIA/main/cerdo.png",
+            points: 200
+        }, {
+            name: "",
+            radius: 110,
+            img: "https://raw.githubusercontent.com/Zaapi06/UnaPresentacionDeLasIA/main/vaca.png",
+            points: 500
+        }, {
+            name: "",
+            radius: 130,
+            img: "https://raw.githubusercontent.com/Zaapi06/UnaPresentacionDeLasIA/main/oso.png",
+            points: 1000
+        }, {
+            name: "",
+            radius: 150,
+            img: "https://raw.githubusercontent.com/Zaapi06/UnaPresentacionDeLasIA/main/elefante.png",
+            points: 2000
+        }, ];
+
+        // ====== Estado del juego ======
+        const gameContainer = document.getElementById('game-container');
+        const nextAnimalDisplay = document.getElementById('next-animal');
+        const scoreDisplay = document.getElementById('score');
+        const gameOverDisplay = document.getElementById('game-over');
+        const finalScoreDisplay = document.getElementById('final-score');
+        const restartBtn = document.getElementById('restart-btn');
+
+        let animals = []; // cuerpos en juego
+        let score = 0;
+        let nextAnimalType = getRandomAnimalType(0, 2);
+        let animId = null;
+        let lastTs = 0;
+        let gameOver = false;
+
+        // ====== Constantes de física (en unidades de píxeles y segundos) ======
+        const GRAVITY = 1400; // px/s^2
+        const RESTITUTION = 0.7; // coef. de rebote entre círculos
+        const WALL_RESTITUTION = 0.6; // paredes/suelo
+        const FRICTION_T = 0.995; // fricción tangencial leve
+        const REST_THRESHOLD = 15; // velocidad (px/s) por debajo de la cual pasa a reposo
+        const MERGE_COOLDOWN = 180; // ms, evita bugs de recombinación instantánea
+        const OUT_MARGIN = 40;
+
+        // ====== Utilidades ======
+        function clamp(v, lo, hi) {
+            return Math.max(lo, Math.min(hi, v));
+        }
+
+        function getRandomAnimalType(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // ====== UI del próximo animal ======
+        function updateNextAnimalDisplay() {
+            const t = animalTypes[nextAnimalType];
+            nextAnimalDisplay.style.width = (t.radius * 2) + 'px';
+            nextAnimalDisplay.style.height = (t.radius * 2) + 'px';
+
+            if (t.img) {
+                nextAnimalDisplay.style.backgroundImage = `url(${t.img})`;
+                nextAnimalDisplay.style.backgroundSize = "140%";
+                nextAnimalDisplay.style.backgroundPosition = "center";
+                nextAnimalDisplay.textContent = "";
+            } else {
+                nextAnimalDisplay.style.backgroundImage = "";
+                nextAnimalDisplay.style.backgroundColor = t.color;
+                nextAnimalDisplay.textContent = "";
+            }
+
+            nextAnimalDisplay.style.transform = 'translateZ(0) scale(1.02)';
+            setTimeout(() => nextAnimalDisplay.style.transform = 'translateZ(0) scale(1)', 120);
+        }
+
+
+        // ====== Creación de un cuerpo/animal ======
+        function createAnimal(typeIndex, x, y, opts = {}) {
+            const t = animalTypes[typeIndex];
+            const el = document.createElement('div');
+            el.className = 'animal moving';
+            el.style.width = el.style.height = (t.radius * 2) + 'px';
+
+            if (t.img) {
+                el.style.backgroundImage = `url(${t.img})`;
+                el.style.backgroundSize = "140%"; // hace zoom dentro del círculo
+                el.style.backgroundPosition = "center";
+
+                el.style.backgroundColor = "transparent";
+            } else {
+                el.style.backgroundColor = t.color;
+            }
+
+            el.innerHTML = ""; // quitamos texto/nombre
+            gameContainer.appendChild(el);
+
+            const body = {
+                id: Math.random().toString(36).slice(2),
+                element: el,
+                type: typeIndex,
+                r: t.radius,
+                x: x,
+                y: y,
+                vx: opts.vx ? ? 0, // ✅ CORRECTO
+                vy: opts.vy ? ? 0, // ✅ CORRECTO
+                mass: t.radius * t.radius,
+                resting: false,
+
+                canMergeAt: performance.now() + (opts.noCooldown ? 0 : MERGE_COOLDOWN),
+            };
+
+            positionElement(body);
+            animals.push(body);
+            return body;
+        }
+
+
+        function positionElement(b) {
+            b.element.style.left = (b.x - b.r) + 'px';
+            b.element.style.top = (b.y - b.r) + 'px';
+            if (b.resting) b.element.classList.remove('moving');
+            else b.element.classList.add('moving');
+        }
+
+        // ====== Entrada: soltar animal con clic/tap ======
+        function onDrop(ev) {
+            if (gameOver) return;
+
+            // Protección adicional contra doble invocación
+            const now = Date.now();
+            if (typeof this.lastDrop === 'number' && now - this.lastDrop < 500) {
+                return;
+            }
+            this.lastDrop = now;
+
+            const rect = gameContainer.getBoundingClientRect();
+            const clientX = (ev.touches ? .[0] ? .clientX) ? ? ev.clientX;
+            let x = clientX - rect.left;
+
+            const r = animalTypes[nextAnimalType].radius;
+            x = clamp(x, r + 1, gameContainer.clientWidth - r - 1);
+
+            // Aparece arriba del todo, ligeramente fuera del contenedor para caer natural
+            createAnimal(nextAnimalType, x, -r - 2, {
+                vx: 0,
+                vy: 0
+            });
+
+            // El siguiente puede subir de nivel máximo hasta +1 para no saltar demasiado
+            nextAnimalType = getRandomAnimalType(0, 2);
+
+            updateNextAnimalDisplay();
+        }
+        // ====== Bucle principal con requestAnimationFrame ======
+        function loop(ts) {
+            if (!lastTs) lastTs = ts;
+            const dt = Math.min((ts - lastTs) / 1000, 0.033); // cap ~30ms
+            lastTs = ts;
+
+            stepPhysics(dt);
+            animId = requestAnimationFrame(loop);
+        }
+
+        function stepPhysics(dt) {
+            const W = gameContainer.clientWidth;
+            const H = gameContainer.clientHeight;
+
+            // 1. PRIMERO verificar si algún animal salió por arriba
+            let gameOverPorFuera = false;
+            for (const b of animals) {
+                if (b.y + b.r < -OUT_MARGIN) {
+                    gameOverPorFuera = true;
+                    break;
+                }
+            }
+            if (gameOverPorFuera) {
+                triggerGameOver();
+                return; // ⚠️ Sale de la función inmediatamente
+            }
+
+            // 2. Bucle principal de física (TODO tu código actual)
+            for (const b of animals) {
+                if (Math.abs(b.vx) > REST_THRESHOLD || Math.abs(b.vy) > REST_THRESHOLD) b.resting = false;
+                b.vy += GRAVITY * dt;
+                b.x += b.vx * dt;
+                b.y += b.vy * dt;
+
+                if (b.x - b.r < 0) {
+                    b.x = b.r;
+                    b.vx = -b.vx * WALL_RESTITUTION;
+                } else if (b.x + b.r > W) {
+                    b.x = W - b.r;
+                    b.vx = -b.vx * WALL_RESTITUTION;
+                }
+
+                if (b.y + b.r > H) {
+                    b.y = H - b.r;
+                    b.vy = -b.vy * WALL_RESTITUTION;
+                    if (Math.abs(b.vy) < REST_THRESHOLD) {
+                        b.vy = 0;
+                        b.vx *= 0.9;
+                        if (Math.abs(b.vx) < REST_THRESHOLD) b.vx = 0;
+                        b.resting = true;
+                    }
+                }
+
+                b.vx *= FRICTION_T;
+                positionElement(b);
+            }
+
+            // 3. Resolver colisiones
+            resolveCircleInteractions();
+
+            // 4. Chequear game over por tope superior
+            for (const b of animals) {
+                if (b.resting && b.y - b.r <= 10) {
+                    triggerGameOver();
+                    break;
+                }
+            }
+        }
+
+
+        function resolveCircleInteractions() {
+            // Hacemos un único merge por frame para evitar cascadas caóticas
+            let mergedThisFrame = false;
+            for (let i = 0; i < animals.length; i++) {
+                for (let j = i + 1; j < animals.length; j++) {
+                    const a = animals[i];
+                    const b = animals[j];
+                    if (!a || !b) continue;
+
+                    const dx = b.x - a.x;
+                    const dy = b.y - a.y;
+                    const dist = Math.hypot(dx, dy) || 0.0001;
+                    const minDist = a.r + b.r;
+
+                    if (dist < minDist) {
+                        // Intento de combinación primero
+                        const now = performance.now();
+                        if (!mergedThisFrame && a.type === b.type && a.type < animalTypes.length - 1 && now >= a.canMergeAt && now >= b.canMergeAt) {
+                            doMerge(i, j);
+                            mergedThisFrame = true;
+                            // reiniciar bucles porque el array cambió
+                            i = -1;
+                            break;
+                        }
+
+                        // Resolver colisión elástica simplificada
+                        const nx = dx / dist;
+                        const ny = dy / dist;
+                        const overlap = minDist - dist;
+
+                        // Separación proporcional a masas
+                        const m1 = a.mass,
+                            m2 = b.mass,
+                            mt = m1 + m2;
+                        a.x -= nx * (overlap * (m2 / mt));
+                        a.y -= ny * (overlap * (m2 / mt));
+                        b.x += nx * (overlap * (m1 / mt));
+                        b.y += ny * (overlap * (m1 / mt));
+
+                        // Componentes normal y tangencial
+                        const v1n = a.vx * nx + a.vy * ny;
+                        const v2n = b.vx * nx + b.vy * ny;
+                        const v1t = -a.vx * ny + a.vy * nx; // tangente (perp. a la normal)
+                        const v2t = -b.vx * ny + b.vy * nx;
+
+                        // Colisión 1D sobre la normal con coef. de restitución
+                        const e = RESTITUTION;
+                        const u1 = v1n,
+                            u2 = v2n;
+                        const newV1n = (u1 * (m1 - e * m2) + (1 + e) * m2 * u2) / (m1 + m2);
+                        const newV2n = (u2 * (m2 - e * m1) + (1 + e) * m1 * u1) / (m1 + m2);
+
+                        // Reconstruir velocidades cartesianas (tangencial casi sin pérdidas, un poco de fricción)
+                        a.vx = newV1n * nx + (v1t * 0.98) * -ny;
+                        a.vy = newV1n * ny + (v1t * 0.98) * nx;
+                        b.vx = newV2n * nx + (v2t * 0.98) * -ny;
+                        b.vy = newV2n * ny + (v2t * 0.98) * nx;
+
+                        a.resting = b.resting = false; // tras choque vuelven a moverse
+                        positionElement(a);
+                        positionElement(b);
+                    }
+                }
+            }
+        }
+
+        function doMerge(idxA, idxB) {
+            const a = animals[idxA];
+            const b = animals[idxB];
+            if (!a || !b) return;
+
+            const newType = a.type + 1;
+            const t = animalTypes[newType];
+
+            // Centro ponderado por masa para evitar saltos bruscos
+            const mt = a.mass + b.mass;
+            const cx = (a.x * a.mass + b.x * b.mass) / mt;
+            const cy = (a.y * a.mass + b.y * b.mass) / mt;
+
+            // Velocidad promedio, con un pequeño impulso hacia arriba
+            const nvx = (a.vx + b.vx) * 0.5;
+            const nvy = Math.min(-220, -Math.abs((a.vy + b.vy) * 0.5) - 120);
+
+            // Eliminar elementos antiguos del DOM y del array
+            if (a.element.parentNode) a.element.parentNode.removeChild(a.element);
+            if (b.element.parentNode) b.element.parentNode.removeChild(b.element);
+
+            // Asegurar eliminación sin romper índices: quitar el más grande primero
+            const hi = Math.max(idxA, idxB);
+            const lo = Math.min(idxA, idxB);
+            animals.splice(hi, 1);
+            animals.splice(lo, 1);
+
+            // Crear nuevo combinado
+            const newBody = createAnimal(newType, cx, cy, {
+                vx: nvx,
+                vy: nvy
+            });
+            newBody.canMergeAt = performance.now() + MERGE_COOLDOWN; // evita re-merge instantáneo
+
+            // Puntuación
+            score += t.points;
+            scoreDisplay.textContent = `Puntuación: ${score}`;
+        }
+
+        // ====== Game Over ======
+        function triggerGameOver() {
+            if (gameOver) return;
+            gameOver = true;
+            cancelAnimationFrame(animId);
+            animId = null;
+            finalScoreDisplay.textContent = `Puntuación: ${score}`;
+            gameOverDisplay.style.display = 'flex';
+        }
+
+        // ====== Reinicio ======
+        function resetGame() {
+            gameOver = false;
+            score = 0;
+            scoreDisplay.textContent = 'Puntuación: 0';
+            nextAnimalType = getRandomAnimalType(0, 2);
+            updateNextAnimalDisplay();
+
+            // Eliminar animales del DOM
+            for (const b of animals) {
+                if (b.element.parentNode) b.element.parentNode.removeChild(b.element);
+            }
+            animals = [];
+
+            lastTs = 0;
+            gameOverDisplay.style.display = 'none';
+
+            if (animId) cancelAnimationFrame(animId);
+            animId = requestAnimationFrame(loop);
+        }
+
+        // ====== Inicialización ======
+        function init() {
+            updateNextAnimalDisplay();
+
+            // Escuchar una sola vez (evitamos listeners duplicados al reiniciar)
+            // Escuchar una sola vez (SOLUCIÓN PARA DOBLE INVOCACIÓN EN MÓVILES)
+            let lastDropTime = 0;
+            const DROP_COOLDOWN = 500; // 500ms entre animales
+
+            function handleDrop(ev) {
+                const now = Date.now();
+                if (now - lastDropTime < DROP_COOLDOWN) return;
+                lastDropTime = now;
+
+                onDrop(ev);
+            }
+
+            // Para dispositivos táctiles
+            gameContainer.addEventListener('touchstart', function(ev) {
+                ev.preventDefault();
+                handleDrop(ev);
+            }, {
+                passive: false
+            });
+
+            // Para ratón
+            gameContainer.addEventListener('click', function(ev) {
+                handleDrop(ev);
+            });
+            restartBtn.addEventListener('click', resetGame);
+
+            animId = requestAnimationFrame(loop);
+        }
+
+        window.addEventListener('load', init);
+    </script>
+</body>
+
+
+</html>
